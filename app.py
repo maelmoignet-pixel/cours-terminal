@@ -58,9 +58,18 @@ CATEGORIES = {
 #   cours-terminal/suites/eval-2025-1.html
 FICHIERS = {
     "suites": {
-        "eval_2025": [],
-        "ds_2025": [],
-        "eval_2026": [],
+        "eval_2025": [
+            {"nom": "Évaluation 1", "fichier": "suites-terminale-2025-eval1.html"},
+            {"nom": "Évaluation ", "fichier": "suites-terminale-2025-eval2.html"},
+        ],
+        "ds_2025": [
+            {"nom": "DS1", "fichier": "suites-terminale-2025-DS1.html"},
+            {"nom": "DS1", "fichier": "suites-terminale-2025-DS1-correction.html"},
+        ],
+        "eval_2026": [
+            {"nom": "Évaluation 1", "fichier": "suites-terminale-2026-eval1.html"},
+            {"nom": "Évaluation 1", "fichier": "suites-terminale-2026-eval2.html"},
+        ],
         "ds_2026": [],
     },
 }
