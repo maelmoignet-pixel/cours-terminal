@@ -25,7 +25,7 @@ BASE_URL = "https://maelmoignet-pixel.github.io/cours-terminal"
 # Un chapitre = un dossier sur GitHub Pages
 CHAPITRES = {
     "Suites numériques": {
-        "dossier": "suites",
+        "dossier": "suites-numeriques",
         "icone": "🔢",
         "description": "Modes de génération, sens de variation, suites arithmétiques et géométriques, raisonnement par récurrence, limites.",
         "cours_fichier": "suites-terminale.html",
