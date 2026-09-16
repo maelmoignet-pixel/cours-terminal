@@ -28,7 +28,7 @@ CHAPITRES = {
         "dossier": "suites",
         "icone": "🔢",
         "description": "Modes de génération, sens de variation, suites arithmétiques et géométriques, raisonnement par récurrence, limites.",
-        "cours_fichier": "suites.html",
+        "cours_fichier": "suites-terminale.html",
     },
     # Ajoute tes futurs chapitres ici, en suivant le même modèle :
     # "Probabilités : expériences répétées": {
