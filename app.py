@@ -74,6 +74,31 @@ FICHIERS = {
     },
 }
 
+# ============================================================
+# BACS BLANCS — indépendants des chapitres (ils en couvrent plusieurs)
+# ============================================================
+
+# Dossier GitHub Pages dédié aux bacs blancs
+BAC_BLANC_DOSSIER = "bac-blanc"
+
+# Chaque bac blanc : un sujet, et éventuellement une (ou plusieurs) correction(s).
+# "sujet" et "correction" sont des noms de fichiers déposés dans le dossier
+# cours-terminal/bac-blanc/ sur GitHub Pages. Laisse à None tant que le fichier
+# n'est pas encore disponible.
+BACS_BLANCS = [
+    {
+        "nom": "Bac blanc n°1",
+        "sujet": "bac-blanc-1-sujet.pdf",
+        "correction": "bac-blanc-1-correction.pdf",
+    },
+    # Ajoute tes futurs bacs blancs ici, en suivant le même modèle :
+    # {
+    #     "nom": "Bac blanc n°2",
+    #     "sujet": "bac-blanc-2-sujet.pdf",
+    #     "correction": None,  # pas encore disponible
+    # },
+]
+
 
 # Icône affichée sur le bouton selon le type de fichier
 def icone_fichier(nom_fichier):
@@ -89,7 +114,7 @@ def label_ouvrir(nom_fichier):
 # ============================================================
 
 if "view" not in st.session_state:
-    st.session_state.view = "accueil"      # "accueil" | "chapitre" | "categorie"
+    st.session_state.view = "accueil"      # "accueil" | "chapitre" | "categorie" | "bac_blanc"
 if "chapitre_courant" not in st.session_state:
     st.session_state.chapitre_courant = None
 if "categorie_courante" not in st.session_state:
@@ -112,6 +137,12 @@ def aller_categorie(nom_chapitre, cle_categorie):
     st.session_state.view = "categorie"
     st.session_state.chapitre_courant = nom_chapitre
     st.session_state.categorie_courante = cle_categorie
+
+
+def aller_bac_blanc():
+    st.session_state.view = "bac_blanc"
+    st.session_state.chapitre_courant = None
+    st.session_state.categorie_courante = None
 
 
 # ============================================================
@@ -139,6 +170,8 @@ with col_home:
     st.button("🏠 Accueil", on_click=aller_accueil, use_container_width=True)
 with col_fil:
     fil = "Accueil"
+    if st.session_state.view == "bac_blanc":
+        fil += " › Bacs blancs"
     if st.session_state.chapitre_courant:
         fil += f" › {st.session_state.chapitre_courant}"
     if st.session_state.categorie_courante:
@@ -154,6 +187,7 @@ st.markdown("<hr>", unsafe_allow_html=True)
 with st.sidebar:
     st.markdown("## 🗺️ Plan du site")
     st.button("🏠 Accueil", key="sb_accueil", on_click=aller_accueil, use_container_width=True)
+    st.button("🎓 Bacs blancs", key="sb_bac_blanc", on_click=aller_bac_blanc, use_container_width=True)
     st.markdown("---")
     for nom_chapitre, infos in CHAPITRES.items():
         with st.expander(f"{infos['icone']} {nom_chapitre}", expanded=(st.session_state.chapitre_courant == nom_chapitre)):
@@ -172,10 +206,20 @@ with st.sidebar:
                 )
 
 # ============================================================
-# VUE 1 : ACCUEIL — liste des chapitres
+# VUE 1 : ACCUEIL — liste des chapitres + accès aux bacs blancs
 # ============================================================
 
 if st.session_state.view == "accueil":
+
+    # --- Bloc Bacs blancs, mis en avant car transversal aux chapitres ---
+    col1, col2 = st.columns([4, 1])
+    with col1:
+        st.markdown("### 🎓 Bacs blancs")
+        st.write("Sujets et corrections des bacs blancs (plusieurs chapitres mélangés).")
+    with col2:
+        st.button("Ouvrir ➜", key="acc_bac_blanc", on_click=aller_bac_blanc, use_container_width=True)
+    st.write("---")
+
     st.subheader("Choisis un chapitre :")
 
     for nom, infos in CHAPITRES.items():
@@ -257,6 +301,38 @@ elif st.session_state.view == "categorie":
             st.write("---")
 
     st.button("⬅ Retour au chapitre", on_click=aller_chapitre, args=(nom_chapitre,))
+
+# ============================================================
+# VUE 4 : BACS BLANCS — sujets et corrections, tous chapitres confondus
+# ============================================================
+
+elif st.session_state.view == "bac_blanc":
+    st.subheader("🎓 Bacs blancs")
+    st.write("Sujets et corrections, indépendants des chapitres (ils en couvrent plusieurs).")
+    st.markdown("---")
+
+    if not BACS_BLANCS:
+        st.info("Aucun bac blanc déposé pour le moment.")
+    else:
+        for bac in BACS_BLANCS:
+            st.markdown(f"#### {bac['nom']}")
+            col1, col2 = st.columns(2)
+
+            with col1:
+                if bac.get("sujet"):
+                    url_sujet = f"{BASE_URL}/{BAC_BLANC_DOSSIER}/{bac['sujet']}"
+                    st.link_button(f"📄 Sujet — {label_ouvrir(bac['sujet'])}", url_sujet, use_container_width=True)
+                else:
+                    st.button("📄 Sujet — pas encore disponible", disabled=True, use_container_width=True, key=f"sujet_dispo_{bac['nom']}")
+
+            with col2:
+                if bac.get("correction"):
+                    url_correction = f"{BASE_URL}/{BAC_BLANC_DOSSIER}/{bac['correction']}"
+                    st.link_button(f"✅ Correction — {label_ouvrir(bac['correction'])}", url_correction, use_container_width=True)
+                else:
+                    st.button("✅ Correction — pas encore disponible", disabled=True, use_container_width=True, key=f"correction_dispo_{bac['nom']}")
+
+            st.write("---")
 
 # ============================================================
 # PIED DE PAGE
