@@ -215,7 +215,7 @@ if st.session_state.view == "accueil":
     col1, col2 = st.columns([4, 1])
     with col1:
         st.markdown("### 🎓 Bacs blancs")
-        st.write("Sujets et corrections des bacs blancs (plusieurs chapitres mélangés).")
+        st.write("Sujets et corrections des bacs blancs 2025.")
     with col2:
         st.button("Ouvrir ➜", key="acc_bac_blanc", on_click=aller_bac_blanc, use_container_width=True)
     st.write("---")
