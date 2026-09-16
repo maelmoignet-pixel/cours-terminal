@@ -75,7 +75,7 @@ FICHIERS = {
 }
 
 # ============================================================
-# BACS BLANCS — indépendants des chapitres (ils en couvrent plusieurs)
+# BACS BLANCS 
 # ============================================================
 
 # Dossier GitHub Pages dédié aux bacs blancs
