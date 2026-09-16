@@ -57,7 +57,7 @@ CATEGORIES = {
 # déposé dans le dossier du chapitre sur GitHub Pages, par exemple :
 #   cours-terminal/suites/eval-2025-1.html
 FICHIERS = {
-    "suites": {
+    "suites-numeriques": {
         "eval_2025": [
             {"nom": "Évaluation 1", "fichier": "suites-terminale-2025-eval1.html"},
             {"nom": "Évaluation ", "fichier": "suites-terminale-2025-eval2.html"},
